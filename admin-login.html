@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Animated Background -->
     <div class="animated-bg">
         <div class="gradient-orb orb-1"></div>
         <div class="gradient-orb orb-2"></div>
@@ -18,15 +17,12 @@
 
     <div class="login-page">
         <div class="login-container">
-            <!-- Back Button -->
             <a href="index.html" class="back-btn">
                 <i class="fas fa-arrow-left"></i>
                 <span>Back to Home</span>
             </a>
 
-            <!-- Login Box -->
             <div class="login-box admin-login-box">
-                <!-- Header with icon -->
                 <div class="login-header">
                     <div class="login-icon admin-login-icon">
                         <i class="fas fa-user-shield"></i>
@@ -35,18 +31,17 @@
                     <p>Access analytics and insights</p>
                 </div>
 
-                <!-- Login Form -->
                 <form id="adminLoginForm" class="login-form">
                     <div class="form-group">
                         <label for="email">
-                            <i class="fas fa-envelope"></i>
-                            <span>Admin Email</span>
+                            <i class="fas fa-user"></i>
+                            <span>Admin Username</span>
                         </label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            placeholder="admin@university.edu" 
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="admin@university.edu"
                             required
                             autocomplete="email"
                         >
@@ -59,11 +54,11 @@
                             <span>Password</span>
                         </label>
                         <div class="password-wrapper">
-                            <input 
-                                type="password" 
-                                id="password" 
-                                name="password" 
-                                placeholder="Enter your password" 
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
                                 required
                                 autocomplete="current-password"
                             >
@@ -80,7 +75,6 @@
                             <span class="checkbox-custom"></span>
                             <span>Remember me</span>
                         </label>
-                        <a href="#" class="forgot-link">Forgot password?</a>
                     </div>
 
                     <button type="submit" class="btn btn-login btn-admin-login">
@@ -91,7 +85,6 @@
                     <div class="error-message" id="errorMessage"></div>
                 </form>
 
-                <!-- Info Section -->
                 <div class="info-section">
                     <div class="info-card info-card-pink">
                         <i class="fas fa-chart-bar"></i>
@@ -107,13 +100,6 @@
                     </div>
                 </div>
 
-                <!-- Demo Notice -->
-                <div class="demo-notice demo-notice-admin">
-                    <i class="fas fa-info-circle"></i>
-                    <p>Use username: <strong>admin@university.edu</strong> and your password</p>
-                </div>
-
-                <!-- Security Badge -->
                 <div class="security-badge">
                     <i class="fas fa-shield-virus"></i>
                     <span>Secured with end-to-end encryption</span>
@@ -127,19 +113,15 @@
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             const toggleIcon = document.getElementById('toggleIcon');
-            
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
+                toggleIcon.classList.replace('fa-eye', 'fa-eye-slash');
             } else {
                 passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
+                toggleIcon.classList.replace('fa-eye-slash', 'fa-eye');
             }
         }
 
-        // Add floating animation to info cards
         document.querySelectorAll('.info-card').forEach((card, index) => {
             card.style.animationDelay = `${index * 0.1}s`;
         });

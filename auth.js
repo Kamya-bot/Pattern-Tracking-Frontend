@@ -17,8 +17,6 @@ if (studentLoginForm) {
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Signing in...</span>';
 
-        // Students don't authenticate against the backend — just save session
-        // (backend has no student user table; only admins are verified)
         const session = {
             role: 'student',
             email: email,
@@ -49,13 +47,12 @@ if (adminLoginForm) {
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Signing in...</span>';
 
         try {
-            // Extract username from email (e.g. admin@university.edu → admin)
             const username = email.includes('@') ? email.split('@')[0] : email;
 
             const response = await fetch(`${API_BASE}/api/admin/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',  // send/receive cookies for session
+                credentials: 'include',
                 body: JSON.stringify({ username, password })
             });
 
@@ -69,6 +66,7 @@ if (adminLoginForm) {
                     loginTime: new Date().toISOString()
                 };
                 localStorage.setItem('userSession', JSON.stringify(session));
+                localStorage.setItem('adminAuthenticated', 'true');
 
                 btn.innerHTML = '<i class="fas fa-check-circle"></i> <span>Success!</span>';
                 btn.style.background = 'linear-gradient(135deg, #11998e, #38ef7d)';
@@ -81,7 +79,7 @@ if (adminLoginForm) {
             }
 
         } catch (err) {
-            showError('Cannot connect to server. Make sure the backend is running.');
+            showError('Cannot connect to server. Please try again in a moment.');
             btn.disabled = false;
             btn.innerHTML = '<span>Access Dashboard</span><i class="fas fa-sign-in-alt"></i>';
         }
