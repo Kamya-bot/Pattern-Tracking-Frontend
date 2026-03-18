@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Tracking System - Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <!-- Logo with colorful icon -->
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h1 class="logo-text">PATTERN TRACKING SYSTEM</h1>
+            </div>
+
+            <!-- Colorful Feature Cards -->
+            <div class="feature-grid">
+                <div class="feature-card feature-card-purple">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Health Monitoring</h3>
+                    <p>Track medical symptoms and patterns in real-time</p>
+                </div>
+                <div class="feature-card feature-card-teal">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Smart Analytics</h3>
+                    <p>AI-powered insights and trend analysis</p>
+                </div>
+                <div class="feature-card feature-card-orange">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Privacy First</h3>
+                    <p>Anonymized data for complete confidentiality</p>
+                </div>
+            </div>
+
+            <!-- Main CTA Section -->
+            <div class="cta-section">
+                <div class="cta-text">
+                    <h2 class="gradient-text">Welcome to the Future of Health Tracking</h2>
+                    <p>Students report symptoms anonymously. Admins analyze trends. Everyone stays healthy.</p>
+                </div>
+
+                <!-- Colorful Login Cards -->
+                <div class="login-cards">
+                    <!-- Student Card -->
+                    <div class="login-card student-card">
+                        <div class="card-header">
+                            <div class="card-icon student-icon">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <h3>Student Portal</h3>
+                            <p>Report your symptoms securely</p>
+                        </div>
+                        <div class="card-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Quick symptom reporting</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>100% anonymous</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Track your history</span>
+                            </div>
+                        </div>
+                        <a href="student-login.html" class="btn btn-student">
+                            <span>Student Login</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Admin Card -->
+                    <div class="login-card admin-card">
+                        <div class="card-header">
+                            <div class="card-icon admin-icon">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <h3>Admin Dashboard</h3>
+                            <p>Analyze health trends & patterns</p>
+                        </div>
+                        <div class="card-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Real-time analytics</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Visual dashboards</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Export reports</span>
+                            </div>
+                        </div>
+                        <a href="admin-login.html" class="btn btn-admin">
+                            <span>Admin Login</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Add hover animations to cards
+        document.querySelectorAll('.login-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Pattern Tracking System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="dashboard admin-dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar admin-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <div class="sidebar-logo-icon"><i class="fas fa-chart-line"></i></div>
+                    <div>
+                        <h3>Pattern Tracking</h3>
+                        <p>Admin Dashboard</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#overview" class="nav-item active"><i class="fas fa-tachometer-alt"></i><span>Overview</span></a>
+                <a href="ml-analytics.html" class="nav-item" style="background:linear-gradient(135deg,#8B5CF6,#3B82F6);color:white;position:relative;">
+                    <i class="fas fa-brain"></i><span>ML Analytics</span>
+                    <span style="position:absolute;top:8px;right:12px;background:#FFF;color:#8B5CF6;padding:2px 6px;border-radius:10px;font-size:0.7rem;font-weight:700;">NEW</span>
+                </a>
+                <a href="#analytics" class="nav-item"><i class="fas fa-chart-bar"></i><span>Analytics</span></a>
+                <a href="#trends" class="nav-item"><i class="fas fa-chart-line"></i><span>Trends</span></a>
+                <a href="#locations" class="nav-item"><i class="fas fa-map-marked-alt"></i><span>Locations</span></a>
+                <a href="#reports" class="nav-item"><i class="fas fa-file-alt"></i><span>Reports</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Health Analytics Dashboard</h1>
+                <p class="dashboard-subtitle">Real-time insights into campus health patterns and trends</p>
+            </div>
+
+            <!-- ML Banner -->
+            <div class="alert" style="background:linear-gradient(135deg,#8B5CF6,#3B82F6);color:white;border:none;margin-bottom:32px;">
+                <i class="fas fa-brain" style="font-size:24px;"></i>
+                <div>
+                    <strong style="font-size:1.1rem;">🎉 NEW: Advanced ML Analytics Available!</strong>
+                    <p style="margin:8px 0 0 0;opacity:0.95;font-size:0.95rem;">Clustering, Anomaly Detection, Forecasting, Risk Heatmaps, and Feature Importance.</p>
+                    <a href="ml-analytics.html" style="display:inline-block;margin-top:12px;padding:10px 20px;background:white;color:#8B5CF6;border-radius:6px;text-decoration:none;font-weight:600;">
+                        <i class="fas fa-arrow-right"></i> View ML Analytics Dashboard
+                    </a>
+                </div>
+            </div>
+
+            <!-- Error Banner -->
+            <div id="errorBanner" style="display:none;background:#fee2e2;color:#991b1b;padding:16px 24px;border-radius:12px;margin-bottom:24px;font-weight:600;">
+                <i class="fas fa-exclamation-triangle"></i> <span id="errorBannerText"></span>
+            </div>
+
+            <!-- Overview Stats -->
+            <section id="overview">
+                <div class="stats-grid">
+                    <div class="stat-card stat-card-purple">
+                        <div class="stat-card-header">
+                            <div><div class="stat-card-value" id="totalReports">—</div><div class="stat-card-label">Total Reports</div></div>
+                            <div class="stat-card-icon"><i class="fas fa-file-medical"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-card-blue">
+                        <div class="stat-card-header">
+                            <div><div class="stat-card-value" id="activeSymptoms">—</div><div class="stat-card-label">Active Symptoms</div></div>
+                            <div class="stat-card-icon"><i class="fas fa-heartbeat"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-card-green">
+                        <div class="stat-card-header">
+                            <div><div class="stat-card-value" id="topSymptom">—</div><div class="stat-card-label">Most Common</div></div>
+                            <div class="stat-card-icon"><i class="fas fa-fire"></i></div>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-card-orange">
+                        <div class="stat-card-header">
+                            <div><div class="stat-card-value" id="topLocation">—</div><div class="stat-card-label">Peak Location</div></div>
+                            <div class="stat-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Charts -->
+            <section id="analytics">
+                <div class="card card-purple">
+                    <div class="card-header"><div class="card-title"><i class="fas fa-chart-bar"></i> Symptom Frequency Analysis</div></div>
+                    <div class="chart-container"><canvas id="symptomFrequencyChart"></canvas></div>
+                </div>
+                <div class="card card-blue">
+                    <div class="card-header"><div class="card-title"><i class="fas fa-chart-pie"></i> Severity Distribution</div></div>
+                    <div class="chart-container"><canvas id="severityChart"></canvas></div>
+                </div>
+            </section>
+
+            <!-- Trends -->
+            <section id="trends">
+                <div class="card card-green">
+                    <div class="card-header"><div class="card-title"><i class="fas fa-chart-line"></i> 14-Day Trend Analysis</div></div>
+                    <div class="chart-container"><canvas id="trendChart"></canvas></div>
+                </div>
+            </section>
+
+            <!-- Locations -->
+            <section id="locations">
+                <div class="card card-blue">
+                    <div class="card-header"><div class="card-title"><i class="fas fa-map-marked-alt"></i> Reports by Location</div></div>
+                    <div class="chart-container"><canvas id="locationChart"></canvas></div>
+                </div>
+                <div class="card card-green">
+                    <div class="card-header"><div class="card-title"><i class="fas fa-building"></i> Location Breakdown</div></div>
+                    <div id="locationBreakdown"></div>
+                </div>
+            </section>
+
+            <!-- Reports Table -->
+            <section id="reports">
+                <div class="card card-purple">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-table"></i> Recent Reports</div>
+                        <button class="btn btn-admin" style="padding:12px 24px;width:auto;font-size:0.95rem;" onclick="exportData()">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Date</th><th>Location</th><th>Symptoms</th><th>Severity</th><th>Time</th></tr>
+                            </thead>
+                            <tbody id="reportsTableBody">
+                                <tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-secondary);">
+                                    <i class="fas fa-spinner fa-spin" style="font-size:32px;display:block;margin-bottom:15px;"></i>Loading...
+                                </td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="admin-dashboard.js"></script>
+    <script>
+        const API_BASE = 'https://pattern-tracking-system.onrender.com';
+        let reportsData = [];
+
+        // ── Auth ─────────────────────────────────────────────────────────────
+        (function checkAuth() {
+            const s = localStorage.getItem('userSession');
+            if (!s) { window.location.href = 'admin-login.html'; return; }
+            if (JSON.parse(s).role !== 'admin') window.location.href = 'index.html';
+        })();
+
+        // ── Logout ───────────────────────────────────────────────────────────
+        async function logout() {
+            if (!confirm('Are you sure you want to logout?')) return;
+            try { await fetch(`${API_BASE}/api/admin/logout`, { method: 'POST', credentials: 'include' }); } catch(e) {}
+            localStorage.removeItem('userSession');
+            window.location.href = 'index.html';
+        }
+
+        // ── Export ───────────────────────────────────────────────────────────
+        function exportData() {
+            const blob = new Blob([JSON.stringify(reportsData, null, 2)], { type: 'application/json' });
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
+            a.href = url;
+            a.download = `health-reports-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function showError(msg) {
+            document.getElementById('errorBannerText').textContent = msg;
+            document.getElementById('errorBanner').style.display = 'block';
+        }
+
+        // ── API calls ─────────────────────────────────────────────────────────
+        async function fetchAnalytics() {
+            const res = await fetch(`${API_BASE}/api/admin/analytics`, { credentials: 'include' });
+            if (res.status === 401) { localStorage.removeItem('userSession'); window.location.href = 'admin-login.html'; return null; }
+            const json = await res.json();
+            if (!json.success) throw new Error(json.error);
+            return json.data;
+        }
+
+        async function fetchReports() {
+            const res  = await fetch(`${API_BASE}/api/admin/reports?limit=100`, { credentials: 'include' });
+            const json = await res.json();
+            if (!json.success) throw new Error(json.error);
+            return json.data;
+        }
+
+        // ── Render helpers ────────────────────────────────────────────────────
+        function loadOverviewStats(data) {
+            document.getElementById('totalReports').textContent   = data.overview.total_reports;
+            document.getElementById('activeSymptoms').textContent = data.overview.active_symptoms;
+            document.getElementById('topSymptom').textContent     = data.overview.most_common_symptom || '—';
+            document.getElementById('topLocation').textContent    = data.overview.peak_location || '—';
+        }
+
+        function createSymptomFrequencyChart(symptomCounts) {
+            const labels = Object.keys(symptomCounts).map(s => s.replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase()));
+            const colors = ['rgba(250,112,154,0.8)','rgba(79,172,254,0.8)','rgba(102,126,234,0.8)','rgba(254,225,64,0.8)',
+                            'rgba(17,153,142,0.8)','rgba(240,147,251,0.8)','rgba(255,107,107,0.8)','rgba(254,180,64,0.8)'];
+            new Chart(document.getElementById('symptomFrequencyChart'), {
+                type: 'bar',
+                data: { labels, datasets: [{ data: Object.values(symptomCounts), backgroundColor: colors, borderWidth: 0, borderRadius: 8 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                           scales: { y: { beginAtZero: true }, x: { grid: { display: false } } } }
+            });
+        }
+
+        function createSeverityChart(severityCounts) {
+            const colorMap = { Low:'rgba(17,153,142,0.8)', Moderate:'rgba(254,225,64,0.8)', High:'rgba(255,107,107,0.8)' };
+            const labels   = Object.keys(severityCounts);
+            new Chart(document.getElementById('severityChart'), {
+                type: 'doughnut',
+                data: { labels, datasets: [{ data: Object.values(severityCounts),
+                        backgroundColor: labels.map(l => colorMap[l] || 'rgba(102,126,234,0.8)'), borderWidth: 3, borderColor: '#fff' }] },
+                options: { responsive: true, maintainAspectRatio: false,
+                           plugins: { legend: { position: 'bottom', labels: { padding: 20, font: { size: 14, weight: 600 } } } } }
+            });
+        }
+
+        function createTrendChart(dailyCounts) {
+            const sorted = [...dailyCounts].reverse();
+            new Chart(document.getElementById('trendChart'), {
+                type: 'line',
+                data: { labels: sorted.map(d => d.date), datasets: [{
+                    label: 'Daily Reports', data: sorted.map(d => d.count),
+                    borderColor: '#667eea', backgroundColor: 'rgba(102,126,234,0.1)',
+                    borderWidth: 3, fill: true, tension: 0.4,
+                    pointBackgroundColor: '#667eea', pointBorderColor: '#fff', pointBorderWidth: 3, pointRadius: 6
+                }]},
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                           scales: { y: { beginAtZero: true }, x: { grid: { display: false } } } }
+            });
+        }
+
+        function createLocationChart(locationCounts) {
+            new Chart(document.getElementById('locationChart'), {
+                type: 'bar',
+                data: { labels: Object.keys(locationCounts), datasets: [{
+                    data: Object.values(locationCounts), backgroundColor: 'rgba(79,172,254,0.8)',
+                    borderColor: '#4facfe', borderWidth: 3, borderRadius: 8
+                }]},
+                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                           scales: { x: { beginAtZero: true }, y: { grid: { display: false } } } }
+            });
+        }
+
+        function loadLocationBreakdown(locationCounts) {
+            const total = Object.values(locationCounts).reduce((a, b) => a + b, 0);
+            if (!total) { document.getElementById('locationBreakdown').innerHTML = '<p style="color:var(--text-secondary);padding:20px;">No data yet.</p>'; return; }
+            document.getElementById('locationBreakdown').innerHTML = Object.entries(locationCounts)
+                .sort((a, b) => b[1] - a[1])
+                .map(([loc, count]) => {
+                    const pct = ((count / total) * 100).toFixed(1);
+                    return `<div style="margin-bottom:20px;">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                            <span style="font-weight:600;"><i class="fas fa-building" style="color:#4facfe;margin-right:8px;"></i>${loc}</span>
+                            <span style="color:var(--text-secondary);">${count} reports (${pct}%)</span>
+                        </div>
+                        <div style="background:#E2E8F0;height:12px;border-radius:6px;overflow:hidden;">
+                            <div style="background:linear-gradient(90deg,#4facfe,#00f2fe);height:100%;width:${pct}%;border-radius:6px;"></div>
+                        </div>
+                    </div>`;
+                }).join('');
+        }
+
+        function loadReportsTable(reports) {
+            const tbody = document.getElementById('reportsTableBody');
+            if (!reports.length) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-secondary);">
+                    <i class="fas fa-inbox" style="font-size:48px;display:block;margin-bottom:15px;opacity:0.3;"></i>No reports yet</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = reports.slice(0, 20).map(r => {
+                const time     = new Date(r.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                const symptoms = Array.isArray(r.symptoms) ? r.symptoms.join(', ') : r.symptoms;
+                return `<tr>
+                    <td style="font-weight:600;">${r.date}</td>
+                    <td><i class="fas fa-map-marker-alt" style="color:#4facfe;margin-right:5px;"></i>${r.location}</td>
+                    <td>${symptoms}</td>
+                    <td><span class="badge badge-${(r.severity||'').toLowerCase()}">${r.severity}</span></td>
+                    <td style="color:var(--text-secondary);">${time}</td>
+                </tr>`;
+            }).join('');
+        }
+
+        // ── Smooth nav ────────────────────────────────────────────────────────
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                    this.classList.add('active');
+                    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ── Init ──────────────────────────────────────────────────────────────
+        window.addEventListener('load', async () => {
+            try {
+                const [analytics, reports] = await Promise.all([fetchAnalytics(), fetchReports()]);
+                if (!analytics) return;
+                reportsData = reports;
+                loadOverviewStats(analytics);
+                createSymptomFrequencyChart(analytics.symptom_counts);
+                createSeverityChart(analytics.severity_counts);
+                createTrendChart(analytics.daily_counts);
+                createLocationChart(analytics.location_counts);
+                loadLocationBreakdown(analytics.location_counts);
+                loadReportsTable(reports);
+            } catch(err) {
+                showError('Failed to load data. Make sure the backend is running at ' + API_BASE);
+                console.error(err);
+            }
+        });
+    </script>
+</body>
+</html>

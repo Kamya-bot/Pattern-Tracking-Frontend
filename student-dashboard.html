@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Pattern Tracking System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard student-dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar student-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <div class="sidebar-logo-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div>
+                        <h3>Pattern Tracking</h3>
+                        <p>Student Portal</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-file-medical"></i>
+                    <span>Report Symptoms</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>My History</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Help</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Report Your Symptoms</h1>
+                <p class="dashboard-subtitle">Your health matters. Share symptoms anonymously to help track campus health patterns.</p>
+            </div>
+
+            <!-- Symptom Reporting Card -->
+            <div class="card card-purple">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fas fa-notes-medical"></i>
+                        Select Your Symptoms
+                    </div>
+                </div>
+
+                <form id="symptomForm">
+                    <!-- Symptom Selection Grid -->
+                    <div class="symptoms-grid">
+                        <div class="symptom-card symptom-fever" data-symptom="Fever" onclick="toggleSymptom(this)">
+                            <div class="symptom-icon"><i class="fas fa-temperature-high"></i></div>
+                            <div class="symptom-label">Fever</div>
+                        </div>
+                        <div class="symptom-card symptom-cold" data-symptom="Cold / Cough" onclick="toggleSymptom(this)">
+                            <div class="symptom-icon"><i class="fas fa-head-side-cough"></i></div>
+                            <div class="symptom-label">Cold / Cough</div>
+                        </div>
+                        <div class="symptom-card symptom-headache" data-symptom="Headache" onclick="toggleSymptom(this)">
+                            <div class="symptom-icon"><i class="fas fa-brain"></i></div>
+                            <div class="symptom-label">Headache</div>
+                        </div>
+                        <div class="symptom-card symptom-stomach" data-symptom="Stomach Pain" onclick="toggleSymptom(this)">
+                            <div class="symptom-icon"><i class="fas fa-hand-holding-medical"></i></div>
+                            <div class="symptom-label">Stomach Pain</div>
+                        </div>
+                        <div class="symptom-card symptom-nausea" data-symptom="Nausea" onclick="toggleSymptom(this)">
+                            <div class="symptom-icon"><i class="fas fa-dizzy"></i></div>
+                            <div class="symptom-label">Nausea</div>
+                        </div>
+                        <div class="symptom-card symptom-allergy" data-symptom="Skin Allergy" onclick="toggleSymptom(this)">
+                            <div class="symptom-icon"><i class="fas fa-allergies"></i></div>
+                            <div class="symptom-label">Skin Allergy</div>
+                        </div>
+                        <div class="symptom-card symptom-fatigue" data-symptom="Fatigue" onclick="toggleSymptom(this)">
+                            <div class="symptom-icon"><i class="fas fa-bed"></i></div>
+                            <div class="symptom-label">Fatigue</div>
+                        </div>
+                        <div class="symptom-card symptom-pain" data-symptom="Body Pain" onclick="toggleSymptom(this)">
+                            <div class="symptom-icon"><i class="fas fa-user-injured"></i></div>
+                            <div class="symptom-label">Body Pain</div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Symptoms -->
+                    <div class="form-field">
+                        <label for="additionalSymptoms">
+                            <i class="fas fa-plus-circle"></i>
+                            Additional Symptoms (Optional)
+                        </label>
+                        <textarea id="additionalSymptoms" rows="4"
+                            placeholder="Describe any other symptoms you're experiencing..."></textarea>
+                    </div>
+
+                    <!-- Location Selection -->
+                    <div class="form-field">
+                        <label for="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Your Location
+                        </label>
+                        <select id="location" required>
+                            <option value="">Select your hostel/location</option>
+                            <option value="North Hostel">North Hostel</option>
+                            <option value="South Hostel">South Hostel</option>
+                            <option value="East Hostel">East Hostel</option>
+                            <option value="West Hostel">West Hostel</option>
+                            <option value="Off Campus">Off Campus</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Severity Selection -->
+                    <div class="form-field">
+                        <label>
+                            <i class="fas fa-heartbeat"></i>
+                            Symptom Severity
+                        </label>
+                        <div class="severity-selector">
+                            <button type="button" class="severity-btn severity-mild" data-severity="Mild" onclick="selectSeverity(this)">
+                                <i class="fas fa-smile"></i> Mild
+                            </button>
+                            <button type="button" class="severity-btn severity-moderate" data-severity="Moderate" onclick="selectSeverity(this)">
+                                <i class="fas fa-meh"></i> Moderate
+                            </button>
+                            <button type="button" class="severity-btn severity-severe" data-severity="Severe" onclick="selectSeverity(this)">
+                                <i class="fas fa-frown"></i> Severe
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Submit Report</span>
+                    </button>
+
+                    <!-- Error message -->
+                    <div id="formError" style="display:none; color:#ff6b6b; margin-top:12px; text-align:center;"></div>
+                </form>
+            </div>
+
+            <!-- Privacy Notice -->
+            <div class="card card-blue" style="background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1)); border-left: 5px solid #4facfe;">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="font-size: 48px; color: #4facfe;">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.3rem;">
+                            Your Privacy is Protected
+                        </h3>
+                        <p style="color: var(--text-secondary); line-height: 1.6;">
+                            All reports are completely anonymous. No personal information is stored or shared.
+                            Your data helps us identify health patterns while keeping your identity safe.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Submissions -->
+            <div class="card card-green">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fas fa-history"></i>
+                        Your Recent Reports
+                    </div>
+                </div>
+                <div id="recentReports">
+                    <p style="color: var(--text-secondary); text-align: center; padding: 20px;">
+                        <i class="fas fa-clipboard-list" style="font-size: 48px; margin-bottom: 15px; display: block; opacity: 0.3;"></i>
+                        No reports yet. Submit your first symptom report above!
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i>
+        <div>
+            <strong>Report Submitted!</strong>
+            <p style="margin: 0; font-size: 0.9rem; opacity: 0.9;">Thank you for helping track campus health patterns.</p>
+        </div>
+    </div>
+
+    <script src="student-dashboard.js"></script>
+    <script>
+        const API_BASE = 'https://pattern-tracking-system.onrender.com';
+
+        function toggleSymptom(card) {
+            card.classList.toggle('selected');
+        }
+
+        let selectedSeverity = null;
+        function selectSeverity(btn) {
+            document.querySelectorAll('.severity-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedSeverity = btn.dataset.severity;
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('userSession');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function showFormError(msg) {
+            const el = document.getElementById('formError');
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 4000);
+        }
+
+        // ✅ Form submission — calls backend API
+        document.getElementById('symptomForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const selectedSymptoms = Array.from(document.querySelectorAll('.symptom-card.selected'))
+                .map(card => card.dataset.symptom);
+
+            if (selectedSymptoms.length === 0) { showFormError('Please select at least one symptom'); return; }
+            if (!selectedSeverity)              { showFormError('Please select symptom severity'); return; }
+
+            const location = document.getElementById('location').value;
+            if (!location) { showFormError('Please select your location'); return; }
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Submitting...</span>';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/student/submit-report`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        symptoms: selectedSymptoms,
+                        additionalSymptoms: document.getElementById('additionalSymptoms').value,
+                        location: location,
+                        severity: selectedSeverity
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Also save to localStorage for "Recent Reports" display
+                    let reports = JSON.parse(localStorage.getItem('symptomReports') || '[]');
+                    reports.push({
+                        id: data.report_id,
+                        symptoms: selectedSymptoms,
+                        location: location,
+                        severity: selectedSeverity,
+                        date: new Date().toLocaleDateString(),
+                        timestamp: new Date().toISOString()
+                    });
+                    localStorage.setItem('symptomReports', JSON.stringify(reports));
+
+                    // Show success
+                    const successMsg = document.getElementById('successMessage');
+                    successMsg.classList.add('show');
+                    setTimeout(() => successMsg.classList.remove('show'), 4000);
+
+                    // Reset form
+                    document.querySelectorAll('.symptom-card').forEach(c => c.classList.remove('selected'));
+                    document.querySelectorAll('.severity-btn').forEach(b => b.classList.remove('selected'));
+                    document.getElementById('additionalSymptoms').value = '';
+                    document.getElementById('location').value = '';
+                    selectedSeverity = null;
+
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    loadRecentReports();
+                } else {
+                    showFormError(data.error || 'Failed to submit report. Please try again.');
+                }
+
+            } catch (err) {
+                showFormError('Cannot connect to server. Make sure the backend is running.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Submit Report</span>';
+            }
+        });
+
+        // Load recent reports from localStorage (for display only)
+        function loadRecentReports() {
+            const reports = JSON.parse(localStorage.getItem('symptomReports') || '[]');
+            const recentReportsDiv = document.getElementById('recentReports');
+
+            if (reports.length === 0) {
+                recentReportsDiv.innerHTML = `
+                    <p style="color: var(--text-secondary); text-align: center; padding: 20px;">
+                        <i class="fas fa-clipboard-list" style="font-size: 48px; margin-bottom: 15px; display: block; opacity: 0.3;"></i>
+                        No reports yet. Submit your first symptom report above!
+                    </p>`;
+                return;
+            }
+
+            const recentReports = reports.slice(-5).reverse();
+            recentReportsDiv.innerHTML = recentReports.map(report => `
+                <div style="background: linear-gradient(135deg, rgba(17, 153, 142, 0.05), rgba(56, 239, 125, 0.05));
+                            padding: 20px; border-radius: 12px; margin-bottom: 15px;
+                            border-left: 4px solid #11998e;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                        <div>
+                            <strong style="color: var(--text-primary);">${report.date}</strong>
+                            <span class="badge badge-${report.severity.toLowerCase()}" style="margin-left: 10px;">
+                                ${report.severity}
+                            </span>
+                        </div>
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">
+                            <i class="fas fa-map-marker-alt"></i> ${report.location}
+                        </span>
+                    </div>
+                    <div style="color: var(--text-secondary);">
+                        <strong>Symptoms:</strong> ${report.symptoms.join(', ')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.addEventListener('load', loadRecentReports);
+    </script>
+</body>
+</html>
