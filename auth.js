@@ -37,18 +37,17 @@ if (adminLoginForm) {
     adminLoginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        const email    = document.getElementById('email').value.trim();
+        // Read from username field (text input, not email)
+        const username = document.getElementById('username').value.trim();
         const password = document.getElementById('password').value;
 
-        if (!email || !password) { showError('Please fill in all fields'); return; }
+        if (!username || !password) { showError('Please fill in all fields'); return; }
 
         const btn = this.querySelector('button[type="submit"]');
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Signing in...</span>';
 
         try {
-            const username = email.includes('@') ? email.split('@')[0] : email;
-
             const response = await fetch(`${API_BASE}/api/admin/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -61,8 +60,7 @@ if (adminLoginForm) {
             if (data.success) {
                 const session = {
                     role: 'admin',
-                    email: email,
-                    username: data.username,
+                    username: username,
                     loginTime: new Date().toISOString()
                 };
                 localStorage.setItem('userSession', JSON.stringify(session));
