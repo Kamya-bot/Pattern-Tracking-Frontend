@@ -14,186 +14,310 @@
         <aside class="sidebar student-sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
-                    <div class="sidebar-logo-icon">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <div>
-                        <h3>Pattern Tracking</h3>
-                        <p>Student Portal</p>
-                    </div>
+                    <div class="sidebar-logo-icon"><i class="fas fa-heartbeat"></i></div>
+                    <div><h3>Pattern Tracking</h3><p>Student Portal</p></div>
                 </div>
             </div>
-
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active">
-                    <i class="fas fa-file-medical"></i>
-                    <span>Report Symptoms</span>
+                <a href="#" class="nav-item active" onclick="showSection('report', this)">
+                    <i class="fas fa-file-medical"></i><span>Report Symptoms</span>
                 </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-history"></i>
-                    <span>My History</span>
+                <a href="#" class="nav-item" onclick="showSection('history', this)">
+                    <i class="fas fa-history"></i><span>My History</span>
                 </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
+                <a href="#" class="nav-item" onclick="showSection('profile', this)">
+                    <i class="fas fa-user"></i><span>Profile</span>
                 </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-info-circle"></i>
-                    <span>Help</span>
+                <a href="#" class="nav-item" onclick="showSection('help', this)">
+                    <i class="fas fa-info-circle"></i><span>Help</span>
                 </a>
             </nav>
-
             <div class="sidebar-footer">
                 <button class="logout-btn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
+                    <i class="fas fa-sign-out-alt"></i><span>Logout</span>
                 </button>
             </div>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
-            <div class="dashboard-header">
-                <h1 class="dashboard-title">Report Your Symptoms</h1>
-                <p class="dashboard-subtitle">Your health matters. Share symptoms anonymously to help track campus health patterns.</p>
-            </div>
 
-            <!-- Symptom Reporting Card -->
-            <div class="card card-purple">
-                <div class="card-header">
-                    <div class="card-title">
-                        <i class="fas fa-notes-medical"></i>
-                        Select Your Symptoms
-                    </div>
+            <!-- ══════════════════════════════════════════════ -->
+            <!-- SECTION 1: REPORT SYMPTOMS                    -->
+            <!-- ══════════════════════════════════════════════ -->
+            <div id="section-report">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Report Your Symptoms</h1>
+                    <p class="dashboard-subtitle">Your health matters. Share symptoms anonymously to help track campus health patterns.</p>
                 </div>
 
-                <form id="symptomForm">
-                    <!-- Symptom Selection Grid -->
-                    <div class="symptoms-grid">
-                        <div class="symptom-card symptom-fever" data-symptom="Fever" onclick="toggleSymptom(this)">
-                            <div class="symptom-icon"><i class="fas fa-temperature-high"></i></div>
-                            <div class="symptom-label">Fever</div>
-                        </div>
-                        <div class="symptom-card symptom-cold" data-symptom="Cold / Cough" onclick="toggleSymptom(this)">
-                            <div class="symptom-icon"><i class="fas fa-head-side-cough"></i></div>
-                            <div class="symptom-label">Cold / Cough</div>
-                        </div>
-                        <div class="symptom-card symptom-headache" data-symptom="Headache" onclick="toggleSymptom(this)">
-                            <div class="symptom-icon"><i class="fas fa-brain"></i></div>
-                            <div class="symptom-label">Headache</div>
-                        </div>
-                        <div class="symptom-card symptom-stomach" data-symptom="Stomach Pain" onclick="toggleSymptom(this)">
-                            <div class="symptom-icon"><i class="fas fa-hand-holding-medical"></i></div>
-                            <div class="symptom-label">Stomach Pain</div>
-                        </div>
-                        <div class="symptom-card symptom-nausea" data-symptom="Nausea" onclick="toggleSymptom(this)">
-                            <div class="symptom-icon"><i class="fas fa-dizzy"></i></div>
-                            <div class="symptom-label">Nausea</div>
-                        </div>
-                        <div class="symptom-card symptom-allergy" data-symptom="Skin Allergy" onclick="toggleSymptom(this)">
-                            <div class="symptom-icon"><i class="fas fa-allergies"></i></div>
-                            <div class="symptom-label">Skin Allergy</div>
-                        </div>
-                        <div class="symptom-card symptom-fatigue" data-symptom="Fatigue" onclick="toggleSymptom(this)">
-                            <div class="symptom-icon"><i class="fas fa-bed"></i></div>
-                            <div class="symptom-label">Fatigue</div>
-                        </div>
-                        <div class="symptom-card symptom-pain" data-symptom="Body Pain" onclick="toggleSymptom(this)">
-                            <div class="symptom-icon"><i class="fas fa-user-injured"></i></div>
-                            <div class="symptom-label">Body Pain</div>
-                        </div>
+                <div class="card card-purple">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-notes-medical"></i> Select Your Symptoms</div>
                     </div>
 
-                    <!-- Additional Symptoms -->
-                    <div class="form-field">
-                        <label for="additionalSymptoms">
-                            <i class="fas fa-plus-circle"></i>
-                            Additional Symptoms (Optional)
-                        </label>
-                        <textarea id="additionalSymptoms" rows="4"
-                            placeholder="Describe any other symptoms you're experiencing..."></textarea>
-                    </div>
-
-                    <!-- Location Selection -->
-                    <div class="form-field">
-                        <label for="location">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Your Location
-                        </label>
-                        <select id="location" required>
-                            <option value="">Select your hostel/location</option>
-                            <option value="North Hostel">North Hostel</option>
-                            <option value="South Hostel">South Hostel</option>
-                            <option value="East Hostel">East Hostel</option>
-                            <option value="West Hostel">West Hostel</option>
-                            <option value="Off Campus">Off Campus</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <!-- Severity Selection -->
-                    <div class="form-field">
-                        <label>
-                            <i class="fas fa-heartbeat"></i>
-                            Symptom Severity
-                        </label>
-                        <div class="severity-selector">
-                            <button type="button" class="severity-btn severity-mild" data-severity="Mild" onclick="selectSeverity(this)">
-                                <i class="fas fa-smile"></i> Mild
-                            </button>
-                            <button type="button" class="severity-btn severity-moderate" data-severity="Moderate" onclick="selectSeverity(this)">
-                                <i class="fas fa-meh"></i> Moderate
-                            </button>
-                            <button type="button" class="severity-btn severity-severe" data-severity="Severe" onclick="selectSeverity(this)">
-                                <i class="fas fa-frown"></i> Severe
-                            </button>
+                    <form id="symptomForm">
+                        <div class="symptoms-grid">
+                            <div class="symptom-card symptom-fever" data-symptom="Fever" onclick="toggleSymptom(this)">
+                                <div class="symptom-icon"><i class="fas fa-temperature-high"></i></div>
+                                <div class="symptom-label">Fever</div>
+                            </div>
+                            <div class="symptom-card symptom-cold" data-symptom="Cold / Cough" onclick="toggleSymptom(this)">
+                                <div class="symptom-icon"><i class="fas fa-head-side-cough"></i></div>
+                                <div class="symptom-label">Cold / Cough</div>
+                            </div>
+                            <div class="symptom-card symptom-headache" data-symptom="Headache" onclick="toggleSymptom(this)">
+                                <div class="symptom-icon"><i class="fas fa-brain"></i></div>
+                                <div class="symptom-label">Headache</div>
+                            </div>
+                            <div class="symptom-card symptom-stomach" data-symptom="Stomach Pain" onclick="toggleSymptom(this)">
+                                <div class="symptom-icon"><i class="fas fa-hand-holding-medical"></i></div>
+                                <div class="symptom-label">Stomach Pain</div>
+                            </div>
+                            <div class="symptom-card symptom-nausea" data-symptom="Nausea" onclick="toggleSymptom(this)">
+                                <div class="symptom-icon"><i class="fas fa-dizzy"></i></div>
+                                <div class="symptom-label">Nausea</div>
+                            </div>
+                            <div class="symptom-card symptom-allergy" data-symptom="Skin Allergy" onclick="toggleSymptom(this)">
+                                <div class="symptom-icon"><i class="fas fa-allergies"></i></div>
+                                <div class="symptom-label">Skin Allergy</div>
+                            </div>
+                            <div class="symptom-card symptom-fatigue" data-symptom="Fatigue" onclick="toggleSymptom(this)">
+                                <div class="symptom-icon"><i class="fas fa-bed"></i></div>
+                                <div class="symptom-label">Fatigue</div>
+                            </div>
+                            <div class="symptom-card symptom-pain" data-symptom="Body Pain" onclick="toggleSymptom(this)">
+                                <div class="symptom-icon"><i class="fas fa-user-injured"></i></div>
+                                <div class="symptom-label">Body Pain</div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Submit Button -->
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <i class="fas fa-paper-plane"></i>
-                        <span>Submit Report</span>
-                    </button>
+                        <div class="form-field">
+                            <label for="additionalSymptoms"><i class="fas fa-plus-circle"></i> Additional Symptoms (Optional)</label>
+                            <textarea id="additionalSymptoms" rows="4" placeholder="Describe any other symptoms..."></textarea>
+                        </div>
 
-                    <!-- Error message -->
-                    <div id="formError" style="display:none; color:#ff6b6b; margin-top:12px; text-align:center;"></div>
-                </form>
-            </div>
+                        <div class="form-field">
+                            <label for="location"><i class="fas fa-map-marker-alt"></i> Your Location</label>
+                            <select id="location" required>
+                                <option value="">Select your hostel/location</option>
+                                <option value="North Hostel">North Hostel</option>
+                                <option value="South Hostel">South Hostel</option>
+                                <option value="East Hostel">East Hostel</option>
+                                <option value="West Hostel">West Hostel</option>
+                                <option value="Off Campus">Off Campus</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
 
-            <!-- Privacy Notice -->
-            <div class="card card-blue" style="background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1)); border-left: 5px solid #4facfe;">
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <div style="font-size: 48px; color: #4facfe;">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div>
-                        <h3 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.3rem;">
-                            Your Privacy is Protected
-                        </h3>
-                        <p style="color: var(--text-secondary); line-height: 1.6;">
-                            All reports are completely anonymous. No personal information is stored or shared.
-                            Your data helps us identify health patterns while keeping your identity safe.
-                        </p>
+                        <div class="form-field">
+                            <label><i class="fas fa-heartbeat"></i> Symptom Severity</label>
+                            <div class="severity-selector">
+                                <button type="button" class="severity-btn severity-mild" data-severity="Mild" onclick="selectSeverity(this)">
+                                    <i class="fas fa-smile"></i> Mild
+                                </button>
+                                <button type="button" class="severity-btn severity-moderate" data-severity="Moderate" onclick="selectSeverity(this)">
+                                    <i class="fas fa-meh"></i> Moderate
+                                </button>
+                                <button type="button" class="severity-btn severity-severe" data-severity="Severe" onclick="selectSeverity(this)">
+                                    <i class="fas fa-frown"></i> Severe
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i><span>Submit Report</span>
+                        </button>
+                        <div id="formError" style="display:none;color:#ff6b6b;margin-top:12px;text-align:center;"></div>
+                    </form>
+                </div>
+
+                <div class="card card-blue" style="background:linear-gradient(135deg,rgba(79,172,254,0.1),rgba(0,242,254,0.1));border-left:5px solid #4facfe;">
+                    <div style="display:flex;align-items:center;gap:15px;">
+                        <div style="font-size:48px;color:#4facfe;"><i class="fas fa-shield-alt"></i></div>
+                        <div>
+                            <h3 style="color:var(--text-primary);margin-bottom:10px;">Your Privacy is Protected</h3>
+                            <p style="color:var(--text-secondary);line-height:1.6;">All reports are completely anonymous. No personal information is stored or shared.</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Submissions -->
-            <div class="card card-green">
-                <div class="card-header">
-                    <div class="card-title">
-                        <i class="fas fa-history"></i>
-                        Your Recent Reports
-                    </div>
+            <!-- ══════════════════════════════════════════════ -->
+            <!-- SECTION 2: MY HISTORY                         -->
+            <!-- ══════════════════════════════════════════════ -->
+            <div id="section-history" style="display:none;">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">My Report History</h1>
+                    <p class="dashboard-subtitle">All your previously submitted symptom reports.</p>
                 </div>
-                <div id="recentReports">
-                    <p style="color: var(--text-secondary); text-align: center; padding: 20px;">
-                        <i class="fas fa-clipboard-list" style="font-size: 48px; margin-bottom: 15px; display: block; opacity: 0.3;"></i>
-                        No reports yet. Submit your first symptom report above!
-                    </p>
+
+                <div class="card card-green">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-history"></i> Submitted Reports</div>
+                        <button onclick="clearHistory()" style="padding:8px 16px;background:#fee2e2;color:#991b1b;border:none;border-radius:8px;cursor:pointer;font-size:0.9rem;">
+                            <i class="fas fa-trash"></i> Clear History
+                        </button>
+                    </div>
+                    <div id="historyList"></div>
                 </div>
             </div>
+
+            <!-- ══════════════════════════════════════════════ -->
+            <!-- SECTION 3: PROFILE                            -->
+            <!-- ══════════════════════════════════════════════ -->
+            <div id="section-profile" style="display:none;">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">My Profile</h1>
+                    <p class="dashboard-subtitle">Your session information and statistics.</p>
+                </div>
+
+                <div class="card card-purple">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-user-circle"></i> Session Info</div>
+                    </div>
+                    <div style="padding:20px;">
+                        <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px;">
+                            <div style="width:80px;height:80px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:white;">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div>
+                                <h2 id="profileEmail" style="margin:0 0 4px 0;"></h2>
+                                <span style="padding:4px 12px;background:rgba(102,126,234,0.1);color:#667eea;border-radius:20px;font-size:0.85rem;">Student</span>
+                            </div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+                            <div style="padding:16px;background:var(--bg-secondary,#f8fafc);border-radius:12px;text-align:center;">
+                                <div style="font-size:2rem;font-weight:700;color:#667eea;" id="totalSubmitted">0</div>
+                                <div style="color:var(--text-secondary);font-size:0.9rem;margin-top:4px;">Reports Submitted</div>
+                            </div>
+                            <div style="padding:16px;background:var(--bg-secondary,#f8fafc);border-radius:12px;text-align:center;">
+                                <div style="font-size:2rem;font-weight:700;color:#11998e;" id="lastSubmitted">—</div>
+                                <div style="color:var(--text-secondary);font-size:0.9rem;margin-top:4px;">Last Submitted</div>
+                            </div>
+                            <div style="padding:16px;background:var(--bg-secondary,#f8fafc);border-radius:12px;text-align:center;">
+                                <div style="font-size:2rem;font-weight:700;color:#FA709A;" id="loginTime">—</div>
+                                <div style="color:var(--text-secondary);font-size:0.9rem;margin-top:4px;">Session Started</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-blue">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-chart-pie"></i> My Symptom Summary</div>
+                    </div>
+                    <div id="symptomSummary" style="padding:20px;"></div>
+                </div>
+            </div>
+
+            <!-- ══════════════════════════════════════════════ -->
+            <!-- SECTION 4: HELP                               -->
+            <!-- ══════════════════════════════════════════════ -->
+            <div id="section-help" style="display:none;">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Help & Information</h1>
+                    <p class="dashboard-subtitle">Everything you need to know about the Pattern Tracking System.</p>
+                </div>
+
+                <div class="card card-blue">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-question-circle"></i> How to Use</div>
+                    </div>
+                    <div style="padding:20px;">
+                        <div style="display:grid;gap:16px;">
+                            <div style="display:flex;gap:16px;align-items:flex-start;padding:16px;background:var(--bg-secondary,#f8fafc);border-radius:12px;">
+                                <div style="width:40px;height:40px;background:#667eea;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;flex-shrink:0;">1</div>
+                                <div>
+                                    <h4 style="margin:0 0 4px 0;">Select Your Symptoms</h4>
+                                    <p style="margin:0;color:var(--text-secondary);font-size:0.9rem;">Click on the symptom cards that match what you're experiencing. You can select multiple symptoms.</p>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:16px;align-items:flex-start;padding:16px;background:var(--bg-secondary,#f8fafc);border-radius:12px;">
+                                <div style="width:40px;height:40px;background:#11998e;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;flex-shrink:0;">2</div>
+                                <div>
+                                    <h4 style="margin:0 0 4px 0;">Choose Your Location</h4>
+                                    <p style="margin:0;color:var(--text-secondary);font-size:0.9rem;">Select which hostel or area of campus you are currently staying in.</p>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:16px;align-items:flex-start;padding:16px;background:var(--bg-secondary,#f8fafc);border-radius:12px;">
+                                <div style="width:40px;height:40px;background:#FA709A;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;flex-shrink:0;">3</div>
+                                <div>
+                                    <h4 style="margin:0 0 4px 0;">Rate Severity</h4>
+                                    <p style="margin:0;color:var(--text-secondary);font-size:0.9rem;">Indicate how severe your symptoms are — Mild, Moderate, or Severe.</p>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:16px;align-items:flex-start;padding:16px;background:var(--bg-secondary,#f8fafc);border-radius:12px;">
+                                <div style="width:40px;height:40px;background:#4facfe;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;flex-shrink:0;">4</div>
+                                <div>
+                                    <h4 style="margin:0 0 4px 0;">Submit Anonymously</h4>
+                                    <p style="margin:0;color:var(--text-secondary);font-size:0.9rem;">Click Submit Report. Your report is completely anonymous — no personal data is stored.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-green">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-shield-alt"></i> Privacy & Security</div>
+                    </div>
+                    <div style="padding:20px;display:grid;gap:12px;">
+                        <div style="display:flex;gap:12px;align-items:center;">
+                            <i class="fas fa-check-circle" style="color:#11998e;font-size:1.2rem;"></i>
+                            <span>No name, student ID, or personal information is collected</span>
+                        </div>
+                        <div style="display:flex;gap:12px;align-items:center;">
+                            <i class="fas fa-check-circle" style="color:#11998e;font-size:1.2rem;"></i>
+                            <span>Reports are stored anonymously in a secure database</span>
+                        </div>
+                        <div style="display:flex;gap:12px;align-items:center;">
+                            <i class="fas fa-check-circle" style="color:#11998e;font-size:1.2rem;"></i>
+                            <span>Data is only used for campus health trend analysis</span>
+                        </div>
+                        <div style="display:flex;gap:12px;align-items:center;">
+                            <i class="fas fa-check-circle" style="color:#11998e;font-size:1.2rem;"></i>
+                            <span>Your email is only stored locally in your browser session</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-purple">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-exclamation-triangle"></i> When to Seek Medical Help</div>
+                    </div>
+                    <div style="padding:20px;">
+                        <p style="color:var(--text-secondary);margin-bottom:16px;">This system is for tracking patterns only. Please visit a doctor if you experience:</p>
+                        <div style="display:grid;gap:10px;">
+                            <div style="display:flex;gap:12px;align-items:center;padding:12px;background:#fee2e2;border-radius:8px;">
+                                <i class="fas fa-exclamation-circle" style="color:#991b1b;"></i>
+                                <span style="color:#991b1b;">High fever above 103°F (39.4°C)</span>
+                            </div>
+                            <div style="display:flex;gap:12px;align-items:center;padding:12px;background:#fee2e2;border-radius:8px;">
+                                <i class="fas fa-exclamation-circle" style="color:#991b1b;"></i>
+                                <span style="color:#991b1b;">Difficulty breathing or chest pain</span>
+                            </div>
+                            <div style="display:flex;gap:12px;align-items:center;padding:12px;background:#fee2e2;border-radius:8px;">
+                                <i class="fas fa-exclamation-circle" style="color:#991b1b;"></i>
+                                <span style="color:#991b1b;">Symptoms lasting more than 3 days</span>
+                            </div>
+                            <div style="display:flex;gap:12px;align-items:center;padding:12px;background:#fee2e2;border-radius:8px;">
+                                <i class="fas fa-exclamation-circle" style="color:#991b1b;"></i>
+                                <span style="color:#991b1b;">Severe vomiting or inability to keep fluids down</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="background:linear-gradient(135deg,rgba(102,126,234,0.1),rgba(118,75,162,0.1));border-left:5px solid #667eea;">
+                    <div style="padding:20px;text-align:center;">
+                        <i class="fas fa-phone-alt" style="font-size:2rem;color:#667eea;margin-bottom:12px;display:block;"></i>
+                        <h3 style="margin:0 0 8px 0;">Campus Health Center</h3>
+                        <p style="color:var(--text-secondary);margin:0;">For medical emergencies, contact your campus health center or call emergency services immediately.</p>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -202,7 +326,7 @@
         <i class="fas fa-check-circle"></i>
         <div>
             <strong>Report Submitted!</strong>
-            <p style="margin: 0; font-size: 0.9rem; opacity: 0.9;">Thank you for helping track campus health patterns.</p>
+            <p style="margin:0;font-size:0.9rem;opacity:0.9;">Thank you for helping track campus health patterns.</p>
         </div>
     </div>
 
@@ -210,22 +334,25 @@
     <script>
         const API_BASE = 'https://pattern-tracking-system.onrender.com';
 
-        function toggleSymptom(card) {
-            card.classList.toggle('selected');
+        // ── Section navigation ────────────────────────────────────────────────
+        function showSection(name, el) {
+            event.preventDefault();
+            document.querySelectorAll('[id^="section-"]').forEach(s => s.style.display = 'none');
+            document.getElementById('section-' + name).style.display = 'block';
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            if (el) el.classList.add('active');
+            if (name === 'history') loadHistory();
+            if (name === 'profile') loadProfile();
         }
+
+        // ── Symptom form ──────────────────────────────────────────────────────
+        function toggleSymptom(card) { card.classList.toggle('selected'); }
 
         let selectedSeverity = null;
         function selectSeverity(btn) {
             document.querySelectorAll('.severity-btn').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
             selectedSeverity = btn.dataset.severity;
-        }
-
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('userSession');
-                window.location.href = 'index.html';
-            }
         }
 
         function showFormError(msg) {
@@ -235,22 +362,17 @@
             setTimeout(() => { el.style.display = 'none'; }, 4000);
         }
 
-        // ✅ Form submission — calls backend API
         document.getElementById('symptomForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-
-            const selectedSymptoms = Array.from(document.querySelectorAll('.symptom-card.selected'))
-                .map(card => card.dataset.symptom);
-
-            if (selectedSymptoms.length === 0) { showFormError('Please select at least one symptom'); return; }
-            if (!selectedSeverity)              { showFormError('Please select symptom severity'); return; }
-
+            const selectedSymptoms = Array.from(document.querySelectorAll('.symptom-card.selected')).map(c => c.dataset.symptom);
+            if (!selectedSymptoms.length) { showFormError('Please select at least one symptom'); return; }
+            if (!selectedSeverity)        { showFormError('Please select symptom severity'); return; }
             const location = document.getElementById('location').value;
             if (!location) { showFormError('Please select your location'); return; }
 
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Submitting...</span>';
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Submitting...</span>';
 
             try {
                 const response = await fetch(`${API_BASE}/api/student/submit-report`, {
@@ -259,90 +381,107 @@
                     body: JSON.stringify({
                         symptoms: selectedSymptoms,
                         additionalSymptoms: document.getElementById('additionalSymptoms').value,
-                        location: location,
-                        severity: selectedSeverity
+                        location, severity: selectedSeverity
                     })
                 });
-
                 const data = await response.json();
-
                 if (data.success) {
-                    // Also save to localStorage for "Recent Reports" display
                     let reports = JSON.parse(localStorage.getItem('symptomReports') || '[]');
-                    reports.push({
-                        id: data.report_id,
-                        symptoms: selectedSymptoms,
-                        location: location,
-                        severity: selectedSeverity,
-                        date: new Date().toLocaleDateString(),
-                        timestamp: new Date().toISOString()
-                    });
+                    reports.push({ id: data.report_id, symptoms: selectedSymptoms, location, severity: selectedSeverity,
+                        date: new Date().toLocaleDateString(), timestamp: new Date().toISOString() });
                     localStorage.setItem('symptomReports', JSON.stringify(reports));
 
-                    // Show success
-                    const successMsg = document.getElementById('successMessage');
-                    successMsg.classList.add('show');
-                    setTimeout(() => successMsg.classList.remove('show'), 4000);
+                    document.getElementById('successMessage').classList.add('show');
+                    setTimeout(() => document.getElementById('successMessage').classList.remove('show'), 4000);
 
-                    // Reset form
                     document.querySelectorAll('.symptom-card').forEach(c => c.classList.remove('selected'));
                     document.querySelectorAll('.severity-btn').forEach(b => b.classList.remove('selected'));
                     document.getElementById('additionalSymptoms').value = '';
                     document.getElementById('location').value = '';
                     selectedSeverity = null;
-
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                    loadRecentReports();
                 } else {
-                    showFormError(data.error || 'Failed to submit report. Please try again.');
+                    showFormError(data.error || 'Failed to submit. Please try again.');
                 }
-
-            } catch (err) {
-                showFormError('Cannot connect to server. Make sure the backend is running.');
+            } catch {
+                showFormError('Cannot connect to server. Please try again in a moment.');
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Submit Report</span>';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Submit Report</span>';
             }
         });
 
-        // Load recent reports from localStorage (for display only)
-        function loadRecentReports() {
+        // ── History ───────────────────────────────────────────────────────────
+        function loadHistory() {
             const reports = JSON.parse(localStorage.getItem('symptomReports') || '[]');
-            const recentReportsDiv = document.getElementById('recentReports');
-
-            if (reports.length === 0) {
-                recentReportsDiv.innerHTML = `
-                    <p style="color: var(--text-secondary); text-align: center; padding: 20px;">
-                        <i class="fas fa-clipboard-list" style="font-size: 48px; margin-bottom: 15px; display: block; opacity: 0.3;"></i>
-                        No reports yet. Submit your first symptom report above!
-                    </p>`;
+            const div = document.getElementById('historyList');
+            if (!reports.length) {
+                div.innerHTML = `<p style="text-align:center;padding:40px;color:var(--text-secondary);">
+                    <i class="fas fa-clipboard-list" style="font-size:48px;display:block;margin-bottom:15px;opacity:0.3;"></i>
+                    No reports yet.</p>`;
                 return;
             }
-
-            const recentReports = reports.slice(-5).reverse();
-            recentReportsDiv.innerHTML = recentReports.map(report => `
-                <div style="background: linear-gradient(135deg, rgba(17, 153, 142, 0.05), rgba(56, 239, 125, 0.05));
-                            padding: 20px; border-radius: 12px; margin-bottom: 15px;
-                            border-left: 4px solid #11998e;">
-                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
-                        <div>
-                            <strong style="color: var(--text-primary);">${report.date}</strong>
-                            <span class="badge badge-${report.severity.toLowerCase()}" style="margin-left: 10px;">
-                                ${report.severity}
-                            </span>
-                        </div>
-                        <span style="color: var(--text-secondary); font-size: 0.9rem;">
-                            <i class="fas fa-map-marker-alt"></i> ${report.location}
-                        </span>
+            div.innerHTML = [...reports].reverse().map(r => `
+                <div style="padding:20px;border-bottom:1px solid var(--border-color,#e2e8f0);">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                        <strong>${r.date}</strong>
+                        <span class="badge badge-${(r.severity||'').toLowerCase()}">${r.severity}</span>
                     </div>
-                    <div style="color: var(--text-secondary);">
-                        <strong>Symptoms:</strong> ${report.symptoms.join(', ')}
+                    <div style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:4px;">
+                        <i class="fas fa-map-marker-alt" style="color:#4facfe;margin-right:6px;"></i>${r.location}
                     </div>
-                </div>
-            `).join('');
+                    <div style="color:var(--text-secondary);font-size:0.9rem;">
+                        <strong>Symptoms:</strong> ${r.symptoms.join(', ')}
+                    </div>
+                </div>`).join('');
         }
 
-        window.addEventListener('load', loadRecentReports);
+        function clearHistory() {
+            if (confirm('Clear all your local report history? (This only removes the display history, not the submitted data.)')) {
+                localStorage.removeItem('symptomReports');
+                loadHistory();
+            }
+        }
+
+        // ── Profile ───────────────────────────────────────────────────────────
+        function loadProfile() {
+            const session = JSON.parse(localStorage.getItem('userSession') || '{}');
+            const reports = JSON.parse(localStorage.getItem('symptomReports') || '[]');
+
+            document.getElementById('profileEmail').textContent = session.email || 'Student';
+            document.getElementById('totalSubmitted').textContent = reports.length;
+            document.getElementById('lastSubmitted').textContent = reports.length
+                ? new Date(reports[reports.length - 1].timestamp).toLocaleDateString() : '—';
+            document.getElementById('loginTime').textContent = session.loginTime
+                ? new Date(session.loginTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : '—';
+
+            // Symptom summary
+            const symptomCount = {};
+            reports.forEach(r => r.symptoms.forEach(s => { symptomCount[s] = (symptomCount[s] || 0) + 1; }));
+            const summaryDiv = document.getElementById('symptomSummary');
+            if (!Object.keys(symptomCount).length) {
+                summaryDiv.innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:20px;">No symptoms recorded yet.</p>';
+                return;
+            }
+            summaryDiv.innerHTML = Object.entries(symptomCount).sort((a,b) => b[1]-a[1]).map(([symptom, count]) => `
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                    <span style="font-weight:500;">${symptom}</span>
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <div style="width:120px;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;">
+                            <div style="width:${(count/reports.length)*100}%;height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;"></div>
+                        </div>
+                        <span style="color:var(--text-secondary);font-size:0.9rem;width:20px;text-align:right;">${count}</span>
+                    </div>
+                </div>`).join('');
+        }
+
+        // ── Logout ────────────────────────────────────────────────────────────
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('userSession');
+                window.location.href = 'index.html';
+            }
+        }
     </script>
 </body>
 </html>
