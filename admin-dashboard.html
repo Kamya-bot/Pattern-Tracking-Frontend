@@ -15,10 +15,7 @@
             <div class="sidebar-header">
                 <div class="sidebar-logo">
                     <div class="sidebar-logo-icon"><i class="fas fa-chart-line"></i></div>
-                    <div>
-                        <h3>Pattern Tracking</h3>
-                        <p>Admin Dashboard</p>
-                    </div>
+                    <div><h3>Pattern Tracking</h3><p>Admin Dashboard</p></div>
                 </div>
             </div>
             <nav class="sidebar-nav">
@@ -148,24 +145,21 @@
         const API_BASE = 'https://pattern-tracking-system.onrender.com';
         let reportsData = [];
 
-        // ── Auth — localStorage only, no cookie dependency ────────────────────
+        // ── Auth via localStorage only ────────────────────────────────────────
         (function checkAuth() {
             const s = localStorage.getItem('userSession');
             if (!s) { window.location.href = 'admin-login.html'; return; }
             const session = JSON.parse(s);
-            if (session.role !== 'admin') { window.location.href = 'index.html'; return; }
+            if (session.role !== 'admin') window.location.href = 'index.html';
         })();
 
-        // ── Logout ───────────────────────────────────────────────────────────
-        async function logout() {
+        function logout() {
             if (!confirm('Are you sure you want to logout?')) return;
-            try { await fetch(`${API_BASE}/api/admin/logout`, { method: 'POST', credentials: 'include' }); } catch(e) {}
             localStorage.removeItem('userSession');
             localStorage.removeItem('adminAuthenticated');
             window.location.href = 'index.html';
         }
 
-        // ── Export ───────────────────────────────────────────────────────────
         function exportData() {
             const blob = new Blob([JSON.stringify(reportsData, null, 2)], { type: 'application/json' });
             const url  = URL.createObjectURL(blob);
@@ -181,30 +175,16 @@
             document.getElementById('errorBanner').style.display = 'block';
         }
 
-        // ── API calls — no credentials:include, use open analytics endpoint ──
+        // ── API calls — no credentials, backend auth removed ─────────────────
         async function fetchAnalytics() {
-            const res = await fetch(`${API_BASE}/api/admin/analytics`, {
-                credentials: 'include'
-            });
-            // If 401, don't redirect — just show error and continue
-            if (res.status === 401) {
-                // Try without session (backend may have restarted)
-                const res2 = await fetch(`${API_BASE}/api/public/analytics`);
-                if (res2.ok) return (await res2.json()).data;
-                showError('Session expired. Please log in again.');
-                setTimeout(() => { window.location.href = 'admin-login.html'; }, 2000);
-                return null;
-            }
+            const res = await fetch(`${API_BASE}/api/admin/analytics`);
             const json = await res.json();
             if (!json.success) throw new Error(json.error);
             return json.data;
         }
 
         async function fetchReports() {
-            const res = await fetch(`${API_BASE}/api/admin/reports?limit=100`, {
-                credentials: 'include'
-            });
-            if (res.status === 401) return [];
+            const res  = await fetch(`${API_BASE}/api/admin/reports?limit=100`);
             const json = await res.json();
             if (!json.success) throw new Error(json.error);
             return json.data;
@@ -322,7 +302,6 @@
         window.addEventListener('load', async () => {
             try {
                 const [analytics, reports] = await Promise.all([fetchAnalytics(), fetchReports()]);
-                if (!analytics) return;
                 reportsData = reports;
                 loadOverviewStats(analytics);
                 createSymptomFrequencyChart(analytics.symptom_counts);
